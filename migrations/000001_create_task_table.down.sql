@@ -1,0 +1,3 @@
+DROP INDEX IF EXISTS title_idx;
+DROP TABLE IF EXISTS todolist.tasks;
+DROP SCHEMA IF EXISTS todolist;

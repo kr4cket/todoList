@@ -1,0 +1,188 @@
+basePath: /
+definitions:
+  errors.ErrorResponse:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+    type: object
+  models.Status:
+    enum:
+    - in_progress
+    - done
+    - new
+    type: string
+    x-enum-varnames:
+    - InProgress
+    - Done
+    - New
+  models.Task:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      status:
+        $ref: '#/definitions/models.Status'
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  responses.SuccessResponse:
+    properties:
+      description:
+        type: string
+      message:
+        type: string
+    type: object
+info:
+  contact:
+    email: danielkoreshkov@gmail.com
+    name: Daniil Koreshkov
+    url: https://t.me/Kr4ckeT
+  description: This is a Simple TodoList.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Swagger TodoList API
+  version: "1.0"
+paths:
+  /api/tasks:
+    get:
+      consumes:
+      - application/json
+      description: Get all tasks from storage
+      operationId: get-tasks
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Task'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+      tags:
+      - Tasks
+  /api/tasks/:
+    post:
+      consumes:
+      - application/json
+      description: Creates task
+      operationId: create-task
+      parameters:
+      - description: Task
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.Task'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/responses.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+      tags:
+      - Tasks
+  /api/tasks/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes tasks by id
+      operationId: delete-task
+      parameters:
+      - description: Task Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+      tags:
+      - Tasks
+    put:
+      consumes:
+      - application/json
+      description: Update task by id
+      operationId: update-task
+      parameters:
+      - description: Task Id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Task
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.Task'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/errors.ErrorResponse'
+      tags:
+      - Tasks
+swagger: "2.0"
