@@ -56,3 +56,7 @@ http://[**host**]:[**port**]/swagger/index.html#/
 
 # Delete Request
 ![img_1.png](assets/img_3.png)
+
+# Результат из БД
+
+![img.png](assets/img_5.png)
